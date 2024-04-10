@@ -4,11 +4,12 @@
 
 postgrass database with default:
 
-  dbHost = "localhost"
-	dbPost = 5432
-	dbUser = "user"
-	dbName = "statsAndUsers"
-	dbPass = "example"
+ - dbHost = "localhost"
+ - dbPost = 5432
+ - dbUser = "user"
+ - dbName = "statsAndUsers"
+ - dbPass = "example"
+
 to change in mian.go
 
 ## endpoints:
