@@ -1,47 +1,50 @@
 package main
 
 import (
-	"StatisticColector/dbStats"
-	"StatisticColector/endpoints"
-	"context"
-	"fmt"
-	"gorm.io/driver/postgres"
-	"gorm.io/gorm"
+	"StatisticColector/controller"
+	"StatisticColector/database"
+	"StatisticColector/model"
+	"github.com/joho/godotenv"
 	"log"
-	"time"
-)
-
-const (
-	dbHost = "localhost"
-	dbPost = 5432
-	dbUser = "user"
-	dbName = "statsAndUsers"
-	dbPass = "example"
+	"os"
 )
 
 func main() {
 	log.Println("Connecting to db")
+	loadEnv()
 
-	psqlconn :=
-		fmt.Sprintf(
-			"host=%s port=%d user=%s password=%s dbname=%s sslmode=disable",
-			dbHost, dbPost, dbUser, dbPass, dbName)
+	initdatabase()
 
-	db, err := gorm.Open(postgres.Open(psqlconn), &gorm.Config{})
+	serveApplication()
+}
+
+func initdatabase() {
+	database.InitDatabase()
+	err := database.Re.DB.AutoMigrate(
+		&model.User{},
+		&model.Name{},
+		&model.Stat{},
+	)
 	if err != nil {
-		log.Fatalln(err, "fail to connect to db")
+		log.Println(`automation error:`, err)
 	}
+}
 
-	ctx, _ := context.WithTimeout(context.Background(), 3*time.Minute)
-	//defer cancel()
-	ctx = nil
+func serveApplication() {
 
-	Repo := dbStats.NewSQLGORMRepository(ctx, db)
-	if err := Repo.Migrate(); err != nil {
-		log.Fatalln(err)
-	}
-
-	routes := endpoints.NewRouts(Repo)
+	routes := controller.NewRouts()
 	routes.AddPath()
-	routes.Start(2137)
+	routes.Start(os.Getenv("PORT"))
+}
+
+func loadEnv() {
+	err := godotenv.Load(".env")
+	if err != nil {
+
+		log.Println("Error loading .env file")
+		shell := os.Getenv("SHELL")
+		log.Println(shell)
+
+	}
+	log.Println(".env file loaded successfully")
 }
