@@ -29,8 +29,8 @@ func (r *Routs) AddPath() {
 		stat := v1.Group("/stat")
 		{
 			stat.POST("/", endpoints.PostStat)
-			stat.GET("/")
-			stat.GET("/:id")
+			stat.GET("/", endpoints.GetNames)
+			stat.GET("/:id", endpoints.GetStats)
 			stat.DELETE("/:id")
 		}
 	}

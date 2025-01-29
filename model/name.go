@@ -8,7 +8,7 @@ import (
 type Name struct {
 	gorm.Model
 	Name  string
-	Stats []Stat
+	Stats []Stat `gorm:"foreignKey:NameID" json:"stats,omitempty"`
 }
 
 func (N *Name) GetByName() *Name {
@@ -20,7 +20,17 @@ func (N *Name) GetByName() *Name {
 func (N *Name) Save() {
 	database.Re.DB.Save(&N)
 }
-func (N *Name) GetStats() []Stat {
-	database.Re.DB.Preload("Stats").Find(&N.Stats)
+func (N *Name) Get() {
+	database.Re.DB.Find(&N)
+}
+func (N *Name) GetStats(limit, offset uint) []Stat {
+	database.Re.DB.Preload("Stats", func(tx *gorm.DB) *gorm.DB {
+		return tx.Limit(int(limit)).Offset(int(offset))
+	}).First(&N)
 	return N.Stats
+}
+func GetAllNames(limit, offset uint) []Name {
+	var N []Name
+	database.Re.DB.Limit(int(limit)).Offset(int(offset)).Find(&N)
+	return N
 }

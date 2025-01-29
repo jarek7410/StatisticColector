@@ -2,17 +2,17 @@ package model
 
 import (
 	"StatisticColector/database"
-	"gorm.io/gorm"
+	"time"
 )
 
 type Stat struct {
-	gorm.Model
-	Value  float64 `json:"value"`
-	Type   string  `json:"type" gorm:"default:default"`
-	NameID uint    `json:"nameID,omitempty"`
+	CreatedAt time.Time
+	Value     float64 `json:"value"`
+	Type      string  `json:"type" gorm:"default:default"`
+	NameID    uint    `json:"nameID,omitempty"`
 }
 
 func (S *Stat) Save() *Stat {
-	database.Re.DB.Save(&S)
+	database.Re.DB.Create(&S)
 	return S
 }
