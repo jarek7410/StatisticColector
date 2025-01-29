@@ -27,5 +27,5 @@ func HalfCheck(c *gin.Context) {
 	c.JSONP(http.StatusOK, data)
 }
 func Coffee(c *gin.Context) {
-	c.String(http.StatusTeapot, "I am a teapot but programer need coffee!!!\nblik 735917147")
+	c.String(http.StatusTeapot, "I am a teapot but programmer need coffee!!!\nblik +48 735 917 147")
 }
