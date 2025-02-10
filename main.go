@@ -8,6 +8,13 @@ import (
 	"log"
 	"os"
 )
+import _ "github.com/swaggo/gin-swagger" // gin-swagger middleware
+import _ "github.com/swaggo/files"       // swagger embed files
+
+// @title           Statistic Collector
+// @version         1.0
+// @description     This is a simple serwer to collect statistics and serv them back.
+// @host      localhost:2137
 
 func main() {
 	log.Println("Connecting to db")

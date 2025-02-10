@@ -4,7 +4,7 @@ services:
   app_points:
     depends_on:
       - "postgres"
-    image: staticcolector
+    image: static_collector
     build: .
     restart: no
     env_file:

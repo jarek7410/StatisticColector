@@ -1,13 +1,24 @@
 package endpoints
 
 import (
-	"StatisticColector/controller/endpoints/dto"
+	"StatisticColector/dto"
 	"StatisticColector/model"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"strconv"
 )
 
+// PostStat godoc
+// @Title post stat
+// @Summary create new stat
+// @Description  crate new stat
+// @Produce json
+// @Accept json
+// @Param stat body dto.PostStatDto true "new stat"
+// @Success 200 {object} model.Stat
+// @Failure 400 {object} dto.PostStatDto
+// @Failure 400
+// @Router /v1/stat [POST]
 func PostStat(c *gin.Context) {
 	postStat := &dto.PostStatDto{}
 
@@ -38,6 +49,17 @@ func PostStat(c *gin.Context) {
 	c.JSONP(http.StatusOK, stat)
 }
 
+// GetStats godoc
+// @Title get stat
+// @Summary get existing stats
+// @Description  get existing stats by name id
+// @Produce json
+// @Param id    path int true "id of name of stats which you want"
+// @Param limit query int false " "  minimum(1) maximum(100)
+// @Param offset query int false " " minimum(0)
+// @Success 200 {object} dto.GetStatsDto
+// @Failure 400
+// @Router /v1/name/{id} [GET]
 func GetStats(c *gin.Context) {
 	id, err1 := strconv.ParseUint(c.Param("id"), 10, 0)
 	limit, err2 := strconv.ParseUint(c.DefaultQuery("limit", "10"), 10, 0)
@@ -69,6 +91,16 @@ func GetStats(c *gin.Context) {
 	c.JSON(http.StatusOK, res)
 }
 
+// GetNames godoc
+// @Title get names
+// @Summary get existing names
+// @Description  get existing names in service
+// @Produce json
+// @Param limit query int false " "  minimum(1) maximum(100)
+// @Param offset query int false " " minimum(0)
+// @Success 200 {array} model.Name
+// @Failure 400
+// @Router /v1/name/ [GET]
 func GetNames(c *gin.Context) {
 	limit, err2 := strconv.ParseUint(c.DefaultQuery("limit", "10"), 10, 0)
 	offset, err3 := strconv.ParseUint(c.DefaultQuery("offset", "0"), 10, 0)

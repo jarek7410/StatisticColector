@@ -1,17 +1,19 @@
 package controller
 
 import (
+	"StatisticColector/dto"
 	model "StatisticColector/model/helthcheck"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )
 
-// gin-swagger middleware
-// swagger embed files
-
-// @BasePath /
-// helth check for basik working of this app
-// @Summary blablabla
+// HalfCheck godoc
+// @Title halfCheck
+// @Summary Get status about server helth
+// @Description  get status
+// @Produce json
+// @Success 200 {object} dto.HalfCheckDto
+// @Router / [GET]
 func HalfCheck(c *gin.Context) {
 	va := model.HealthCheck()
 	var dbStatus string
@@ -20,12 +22,14 @@ func HalfCheck(c *gin.Context) {
 	} else {
 		dbStatus = "up"
 	}
-	data := map[string]interface{}{
-		"version":  "alpha",
-		"database": dbStatus,
+	//data := map[string]interface{}{
+	data := dto.HalfCheckDto{
+		Version:  "alpha",
+		Database: dbStatus,
 	}
 	c.JSONP(http.StatusOK, data)
 }
 func Coffee(c *gin.Context) {
+	//c.Redirect(http.StatusMovedPermanently, "http://www.google.com/")
 	c.String(http.StatusTeapot, "I am a teapot but programmer need coffee!!!\nblik +48 735 917 147")
 }
