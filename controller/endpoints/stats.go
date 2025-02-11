@@ -98,7 +98,7 @@ func GetStats(c *gin.Context) {
 // @Produce json
 // @Param limit query int false " "  minimum(1) maximum(100)
 // @Param offset query int false " " minimum(0)
-// @Success 200 {array} model.Name
+// @Success 200 {array} dto.NameDto
 // @Failure 400
 // @Router /v1/name/ [GET]
 func GetNames(c *gin.Context) {

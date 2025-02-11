@@ -3,8 +3,9 @@ package controller
 import (
 	"StatisticColector/controller/endpoints"
 	helthCheck "StatisticColector/controller/helfcheck"
+	docs "StatisticColector/docs"
 	"github.com/gin-gonic/gin"
-	swaggerFiles "github.com/swaggo/files"
+	swaggerfiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
 	"log"
 )
@@ -22,10 +23,11 @@ func NewRouts() *Routs {
 }
 
 func (r *Routs) AddPath() {
-	r.r.GET("/", helthCheck.HalfCheck)
+	r.r.GET("/half_check", helthCheck.HalfCheck)
 	r.r.GET("/tea", helthCheck.Coffee)
 	r.r.GET("/coffee", helthCheck.Coffee)
-	r.r.GET("/docs", ginSwagger.WrapHandler(swaggerFiles.Handler))
+	docs.SwaggerInfo.BasePath = "/"
+	r.r.GET("/docs/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
 
 	v1 := r.r.Group("/v1")
 	{

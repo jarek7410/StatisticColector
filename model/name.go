@@ -2,6 +2,7 @@ package model
 
 import (
 	"StatisticColector/database"
+	"StatisticColector/dto"
 	"gorm.io/gorm"
 )
 
@@ -29,8 +30,8 @@ func (N *Name) GetStats(limit, offset uint) []Stat {
 	}).First(&N)
 	return N.Stats
 }
-func GetAllNames(limit, offset uint) []Name {
-	var N []Name
-	database.Re.DB.Limit(int(limit)).Offset(int(offset)).Find(&N)
+func GetAllNames(limit, offset uint) []dto.NameDto {
+	var N []dto.NameDto
+	database.Re.DB.Model(&Name{}).Limit(int(limit)).Offset(int(offset)).Find(&N)
 	return N
 }

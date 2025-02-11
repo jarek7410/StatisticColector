@@ -13,7 +13,7 @@ import (
 // @Description  get status
 // @Produce json
 // @Success 200 {object} dto.HalfCheckDto
-// @Router / [GET]
+// @Router /half_check [GET]
 func HalfCheck(c *gin.Context) {
 	va := model.HealthCheck()
 	var dbStatus string
@@ -24,8 +24,9 @@ func HalfCheck(c *gin.Context) {
 	}
 	//data := map[string]interface{}{
 	data := dto.HalfCheckDto{
-		Version:  "alpha",
-		Database: dbStatus,
+		Version:     "0.1",
+		VersionName: "",
+		Database:    dbStatus,
 	}
 	c.JSONP(http.StatusOK, data)
 }

@@ -22,3 +22,8 @@ type StatDto struct {
 	Type      string    `json:"type"`
 	CreatedAt time.Time `json:"createdAt"`
 }
+
+type NameDto struct {
+	Id   uint   `json:"id"`
+	Name string `json:"name"`
+}

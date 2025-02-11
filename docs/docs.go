@@ -15,7 +15,7 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/": {
+        "/half_check": {
             "get": {
                 "description": "get status",
                 "produces": [
@@ -62,7 +62,7 @@ const docTemplate = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/model.Name"
+                                "$ref": "#/definitions/dto.NameDto"
                             }
                         }
                     },
@@ -183,6 +183,20 @@ const docTemplate = `{
                 },
                 "version": {
                     "type": "string"
+                },
+                "version_name": {
+                    "type": "string"
+                }
+            }
+        },
+        "dto.NameDto": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
                 }
             }
         },
@@ -214,44 +228,6 @@ const docTemplate = `{
                 },
                 "value": {
                     "type": "number"
-                }
-            }
-        },
-        "gorm.DeletedAt": {
-            "type": "object",
-            "properties": {
-                "time": {
-                    "type": "string"
-                },
-                "valid": {
-                    "description": "Valid is true if Time is not NULL",
-                    "type": "boolean"
-                }
-            }
-        },
-        "model.Name": {
-            "type": "object",
-            "properties": {
-                "createdAt": {
-                    "type": "string"
-                },
-                "deletedAt": {
-                    "$ref": "#/definitions/gorm.DeletedAt"
-                },
-                "id": {
-                    "type": "integer"
-                },
-                "name": {
-                    "type": "string"
-                },
-                "stats": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/model.Stat"
-                    }
-                },
-                "updatedAt": {
-                    "type": "string"
                 }
             }
         },
